@@ -2,7 +2,7 @@
 
 [![Build Status][ci-image]][ci-url] [![dependencies][dependencies-image]][dependencies-url] [![dev-dependencies][dev-dependencies-image]][dev-dependencies-url]
 
-Based on [ReactNativeTS]([original]), a minimal template of a [React Native](https://facebook.github.io/react-native/) project with [Typescript](https://www.typescriptlang.org/).
+Based on [ReactNativeTS](https://github.com/mrpatiwi/ReactNativeTS), a minimal template of a [React Native](https://facebook.github.io/react-native/) project with [Typescript](https://www.typescriptlang.org/).
 
 ## Getting Started
 
@@ -13,8 +13,8 @@ Rename `config.example.json` to `config.json` and set your api key.
 Clone this repository:
 
 ```sh
-git clone https://github.com/mrpatiwi/ReactNativeTS.git
-cd ReactNativeTS
+git clone https://github.com/zaripych/holidaym.git
+cd holidaym
 ```
 
 Install dependencies:
@@ -59,7 +59,6 @@ This project uses Typescript + Jest. Run the test suite with:
 yarn test
 ```
 
-[original]: https://github.com/mrpatiwi/ReactNativeTS
 [ci-image]: https://travis-ci.org/zaripych/holidaym.svg
 [ci-url]: https://travis-ci.org/zaripych/holidaym
 [dependencies-image]: https://david-dm.org/mrpatiwi/ReactNativeTS.svg

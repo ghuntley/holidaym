@@ -12,7 +12,7 @@ interface State {
 }
 
 export default class App extends Component<Props, State> {
-    
+
     async componentWillMount() {
         let api = new HolidayApi(config.key)
 
@@ -27,15 +27,15 @@ export default class App extends Component<Props, State> {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Welcome to React Native
+                <Text style={styles.countDownLabel}>
+                    0:00:00
                 </Text>
-                <Text style={styles.instructions}>
-                    To get started, edit index.ios.js
+                <Text>until</Text>
+                <Text>
+                    Independence Day
                 </Text>
-                <Text style={styles.instructions}>
-                    Press Cmd+R to reload, {"\n"}
-                    Cmd+D or shake for dev menu
+                <Text>
+                    2 February 2019
                 </Text>
             </View>
         );
@@ -50,10 +50,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#F5FCFF",
     } as ViewStyle,
 
-    welcome: {
+    countDownLabel: {
         fontSize: 20,
-        textAlign: "center",
-        margin: 10,
+        textAlign: "center"
     } as TextStyle,
 
     instructions: {

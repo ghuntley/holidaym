@@ -1,4 +1,4 @@
-package com.reactnativets;
+package com.holidaym;
 
 import android.app.Application;
 
