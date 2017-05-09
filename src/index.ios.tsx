@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
 import { HolidayApi } from './HolidayApi'
-let config = require('./config.json')
+let config = require('../config.json')
 
 interface Props {
 
