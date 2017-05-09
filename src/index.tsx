@@ -2,13 +2,15 @@ import React, { Component,  } from "react";
 import { View, Text, StyleSheet, ViewStyle, TextStyle, ActivityIndicator } from "react-native";
 import { HolidayApi } from './HolidayApi'
 let config = require('../config.json')
+import moment from "moment"
 
 interface Props {
 
 }
 
 interface State {
-    holidayName: string
+    holidayName?: string
+    date?: string
 }
 
 export default class App extends Component<Props, State> {
@@ -16,9 +18,7 @@ export default class App extends Component<Props, State> {
     constructor() {
         super()
 
-        this.state = {
-            holidayName: ""
-        }
+        this.state = { }
     }
 
     async componentWillMount() {
@@ -26,17 +26,17 @@ export default class App extends Component<Props, State> {
 
         let holidays = await api.fromNow("US")
 
-        this.setState({holidayName: holidays[0].name})
+        let date = moment(holidays[0].date)
 
-        holidays.forEach(holiday => {
-            console.log(holiday.name)
-        })
-    
+        this.setState({
+            holidayName: holidays[0].name,
+            date: date.format("LL")
+        })    
     }
 
     render() {
         var contents
-        if (this.state.holidayName === "") {
+        if (!this.state.holidayName) {
             contents = <ActivityIndicator />
         } else {
             contents = (
@@ -49,7 +49,7 @@ export default class App extends Component<Props, State> {
                         {this.state.holidayName}
                     </Text>
                     <Text>
-                        2 February 2019
+                        {this.state.date}
                     </Text>
                 </View>
             )
