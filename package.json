@@ -12,11 +12,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "moment": "^2.18.1",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0"
   },
   "devDependencies": {
     "@types/jest": "^19.2.3",
+    "@types/moment": "^2.13.0",
     "@types/react": "^15.0.24",
     "@types/react-native": "^0.43.11",
     "@types/react-test-renderer": "^15.5.0",
