@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import React, { Component,  } from "react";
+import { View, Text, StyleSheet, ViewStyle, TextStyle, ActivityIndicator } from "react-native";
 import { HolidayApi } from './HolidayApi'
 let config = require('../config.json')
 
@@ -8,15 +8,25 @@ interface Props {
 }
 
 interface State {
-
+    holidayName: string
 }
 
 export default class App extends Component<Props, State> {
+
+    constructor() {
+        super()
+
+        this.state = {
+            holidayName: ""
+        }
+    }
 
     async componentWillMount() {
         let api = new HolidayApi(config.key)
 
         let holidays = await api.fromNow("US")
+
+        this.setState({holidayName: holidays[0].name})
 
         holidays.forEach(holiday => {
             console.log(holiday.name)
@@ -25,18 +35,28 @@ export default class App extends Component<Props, State> {
     }
 
     render() {
+        var contents
+        if (this.state.holidayName === "") {
+            contents = <ActivityIndicator />
+        } else {
+            contents = (
+                <View style={styles.container}>
+                    <Text style={styles.countDownLabel}>
+                        0:00:00
+                    </Text>
+                    <Text>until</Text>
+                    <Text>
+                        {this.state.holidayName}
+                    </Text>
+                    <Text>
+                        2 February 2019
+                    </Text>
+                </View>
+            )
+        }
         return (
             <View style={styles.container}>
-                <Text style={styles.countDownLabel}>
-                    0:00:00
-                </Text>
-                <Text>until</Text>
-                <Text>
-                    Independence Day
-                </Text>
-                <Text>
-                    2 February 2019
-                </Text>
+                { contents }
             </View>
         );
     }
