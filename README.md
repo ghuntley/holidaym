@@ -8,6 +8,8 @@ Based on [ReactNativeTS](https://github.com/mrpatiwi/ReactNativeTS), a minimal t
 
 * Requirements: [Node.js](https://nodejs.org) and [Yarn](https://yarnpkg.com/)
 
+Rename `config.example.json` to `config.json` and set your api key.
+
 Clone this repository:
 
 ```sh
