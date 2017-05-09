@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import { HolidayApi } from './HolidayApi'
+let config = require('./config.json')
 
 interface Props {
 
@@ -10,6 +12,18 @@ interface State {
 }
 
 export default class App extends Component<Props, State> {
+    
+    async componentWillMount() {
+        let api = new HolidayApi(config.key)
+
+        let holidays = await api.fromNow("US")
+
+        holidays.forEach(holiday => {
+            console.log(holiday.name)
+        })
+    
+    }
+
     render() {
         return (
             <View style={styles.container}>
