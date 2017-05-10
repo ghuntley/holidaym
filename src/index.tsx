@@ -1,83 +1,100 @@
 import React, { Component,  } from "react";
-import { View, Text, StyleSheet, ViewStyle, TextStyle, ActivityIndicator } from "react-native";
+import { RefreshControl, 
+         ScrollView, 
+         View, 
+         Text, 
+         TextProperties,
+         StyleSheet, 
+         ViewStyle, 
+         TextStyle, 
+         ActivityIndicator } from "react-native";
+import { Countdown } from "./countdown"
 import { HolidayApi } from './HolidayApi'
-let config = require('../config.json')
 import moment from "moment"
+
+let config = require('../config.json')
 
 interface Props {
 
 }
 
+class ViewData {
+    constructor(public readonly holidayName: string, 
+                public readonly date: moment.Moment) {
+    }
+
+} 
+
 interface State {
-    holidayName?: string
-    date?: string
+    refreshing: boolean
+    model?: ViewData
 }
 
 export default class App extends Component<Props, State> {
-
+    
     constructor() {
         super()
 
-        this.state = { }
+        this.state = {
+            refreshing: false
+        }
     }
 
     async componentWillMount() {
-        let api = new HolidayApi(config.key)
+        await this.refresh()
+    }
 
-        let holidays = await api.fromNow("US")
+    async refresh() {
+        const api = new HolidayApi(config.key)
 
-        let date = moment(holidays[0].date)
+        const holidays = await api.fromNow("US")
+
+        const date = moment(holidays[0].date)
 
         this.setState({
-            holidayName: holidays[0].name,
-            date: date.format("LL")
-        })    
+            refreshing: false,
+            model: new ViewData(holidays[0].name, date)
+        })
     }
 
     render() {
-        var contents
-        if (!this.state.holidayName) {
-            contents = <ActivityIndicator />
-        } else {
-            contents = (
-                <View style={styles.container}>
-                    <Text style={styles.countDownLabel}>
-                        0:00:00
-                    </Text>
-                    <Text>until</Text>
-                    <Text>
-                        {this.state.holidayName}
-                    </Text>
-                    <Text>
-                        {this.state.date}
-                    </Text>
-                </View>
-            )
-        }
         return (
-            <View style={styles.container}>
-                { contents }
-            </View>
+            <ScrollView style={styles.scroll} 
+                contentContainerStyle={{flexGrow: 1}}
+                refreshControl={
+                    <RefreshControl 
+                        refreshing={this.state.refreshing}
+                        onRefresh={this.refresh.bind(this)} />
+                }>
+                {!this.state.model || this.state.refreshing ||
+                    <View style={styles.container}>
+                        <Countdown toMoment={this.state.model.date} />
+                        <Text>until</Text>
+                        <Text>
+                            {this.state.model.holidayName}
+                        </Text>
+                        <Text>
+                            {this.state.model.date.format("LL")}
+                        </Text>
+                    </View>
+                }
+            </ScrollView>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    scroll: {
+        flex: 1,
+        backgroundColor: "#F5FCFF",
+    } as ViewStyle,
+
     container: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F5FCFF",
-    } as ViewStyle,
-
-    countDownLabel: {
-        fontSize: 20,
-        textAlign: "center"
-    } as TextStyle,
-
-    instructions: {
-        textAlign: "center",
-        color: "#333333",
-        marginBottom: 5,
-    } as TextStyle,
+        height: "100%"
+    } as ViewStyle
+    
 });
